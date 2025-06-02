@@ -36,5 +36,6 @@ public abstract class Pessoa{
     public abstract Boolean editar();
     public abstract ArrayList<Pessoa> listar();
     public abstract int consultar(int id);
+    public abstract void mostrar(); 
 
 }
