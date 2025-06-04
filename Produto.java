@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,16 +37,23 @@ public class Produto {
         this.valor = valor;
     }
 
-    @Override
     public Boolean inserir(){
-        try {
-
-        } catch(IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
+        
+        try{
+            FileWriter fw = new FileWriter("Produto.txt", true);
+            
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(descProduto+ ";"+idProduto + ";"+valor);
+            bw.close();
+            fw.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
+
+
     public Boolean editar(){
         try {
             
@@ -52,21 +63,44 @@ public class Produto {
         }
         return true;
     }
-    public ArrayList<Pessoa> listar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
 
-        }
-    }
-    public int consultar(int id){
-        try {
+    public ArrayList<Produto> listar(){
+        ArrayList<Produto> produtos = new ArrayList<>();
+        try{
+            FileReader fr = new FileReader("Produto.txt");
             
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
+            BufferedReader br = new BufferedReader(fr);
+            String linha;
+            String[] dados;
+            while((linha = br.readLine()) != null){
+                dados = linha.split(";");
+                Produto p = new Produto(dados[0], Integer.parseInt(dados[1]), Double.parseDouble(dados[2]));
+                produtos.add(p);
+            }
+            br.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
         }
+        return produtos;
     }
+
+    public Produto consultar(int id){
+        Produto retorno = null;
+        try{
+            for(Produto p: listar()){
+                if(p.idProduto == (id)){
+                    retorno = p;
+                    break;
+                }
+            }
+                return retorno;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                return retorno;
+            }
+            
+    }
+
     public void mostrar(){
        System.out.println(descProduto+ ";"+ idProduto+ ";"+ valor);
     }
