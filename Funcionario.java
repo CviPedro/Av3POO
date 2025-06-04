@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -39,16 +43,23 @@ public class Funcionario extends Pessoa {
         this.idade = idade;
     }
 
-    @Override
+    
     public Boolean inserir(){
-        try {
-
-        } catch(IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
+        
+        try{
+            FileWriter fw = new FileWriter("Funcionario.txt", true);
+            
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(super.cpf+ ";"+nome + ";"+idade + ";"+funcao);
+            bw.close();
+            fw.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
+
     public Boolean editar(){
         try {
             
@@ -58,24 +69,50 @@ public class Funcionario extends Pessoa {
         }
         return true;
     }
-    public ArrayList<Pessoa> listar(){
-        try {
+    public ArrayList<Funcionario> listar(){
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        try{
+            FileReader fr = new FileReader("Funcionario.txt");
             
-        } catch (Exception e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-
+            BufferedReader br = new BufferedReader(fr);
+            String linha;
+            String[] dados;
+            while((linha = br.readLine()) != null){
+                dados = linha.split(";");
+                Funcionario f = new Funcionario(dados[0], dados[1], dados[2], Integer.parseInt(dados[3]));
+                funcionarios.add(f);
+                //System.out.println(linha);
+            }
+            br.close();
+           
+        }catch(IOException e){
+            System.out.println(e.getMessage());
         }
+        return funcionarios;
     }
-    public int consultar(int id){
-        try {
+    public Funcionario consultar(String id){
+        Funcionario retorno = null;
+        try{
+            for(Funcionario f: listar()){
+                if(f.cpf.equals(id)){
+                    retorno = f;
+                    break;
+                }
+            }
+                return retorno;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                return retorno;
+            }
             
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-        }
-    }
+    }    
     public void mostrar(){
-        System.out.println(cpf+ ";"+ nome+ ";"+ idade+ ";"+ funcao);
+        System.out.println(toString());
 
+    }
+    @Override
+    public String toString() {
+        return super.toString() + "; " + funcao;
     }
 
 }
