@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public abstract class Pessoa{
     protected String cpf;
@@ -32,10 +31,12 @@ public abstract class Pessoa{
         this.idade = idade;
     }
 
-    public abstract Boolean inserir();
-    public abstract Boolean editar();
-    public abstract ArrayList<Pessoa> listar();
-    public abstract int consultar(int id);
+
     public abstract void mostrar(); 
+    
+    @Override
+    public String toString() {
+        return   cpf+ "; "+ nome + "; " + idade;
+    }
 
 }
