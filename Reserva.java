@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -77,17 +81,24 @@ public class Reserva {
         this.hospede = hospede;
     }
 
-     @Override
     public Boolean inserir(){
-        try {
-
-        } catch(IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-
+        
+        try{
+            FileWriter fw = new FileWriter("Reserva.txt", true);
+            
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(idReserva + ";"+valor + ";"+dataEntrada + ";"+dataSaida + ";"+checkin
+            + ";"+checkout + ";"+quarto + ";"+hospede );
+            bw.close();
+            fw.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
             return false;
         }
         return true;
     }
+
+
     public Boolean editar(){
         try {
             
@@ -97,21 +108,45 @@ public class Reserva {
         }
         return true;
     }
-    public ArrayList<Pessoa> listar(){
-        try {
-            
-        } catch (Exception e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
 
-        }
-    }
-    public int consultar(int id){
-        try {
+    public ArrayList<Reserva> listar(){
+        ArrayList<Reserva> reservas = new ArrayList<>();
+        try{
+            FileReader fr = new FileReader("Reserva.txt");
             
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
+            BufferedReader br = new BufferedReader(fr);
+            String linha;
+            String[] dados;
+            while((linha = br.readLine()) != null){
+                dados = linha.split(";");
+            Reserva r = new Reserva(Integer.parseInt(dados[0]), Double.parseDouble(dados[1]), dados[2], dados[3], 
+            Boolean.parseBoolean(dados[4]), Boolean.parseBoolean(dados[5]), quarto.getIdQuarto(), hospede.getCpf());
+               reservas.add(r);
+            }
+            br.close();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
         }
+        return reservas;
     }
+
+    public Reserva consultar(int id){
+        Reserva retorno = null;
+        try{
+            for(Reserva r: listar()){
+                if(r.idReserva == (id)){
+                    retorno = r;
+                    break;
+                }
+            }
+                return retorno;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                return retorno;
+            }
+            
+    }
+
     public void mostrar(){
         System.out.println(idReserva+ ";"+ valor+ ";"+ dataEntrada+ ";"+ dataSaida+ 
         ";"+checkin+ ";"+ checkout+ ";"+ quarto+ ";"+ hospede );
