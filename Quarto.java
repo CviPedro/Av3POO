@@ -31,7 +31,7 @@ public class Quarto {
     public Boolean inserir(){
         
         try{
-            FileWriter fw = new FileWriter("Quarto.txt", true);
+            FileWriter fw = new FileWriter("texts/Quarto.txt", true);
             
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(descQuarto+ ";"+idQuarto );
@@ -44,21 +44,10 @@ public class Quarto {
         return true;
     }
 
-
-    public Boolean editar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
     public ArrayList<Quarto> listar(){
         ArrayList<Quarto> quartos = new ArrayList<>();
         try{
-            FileReader fr = new FileReader("Quarto.txt");
+            FileReader fr = new FileReader("texts/Quarto.txt");
             
             BufferedReader br = new BufferedReader(fr);
             String linha;
@@ -79,7 +68,7 @@ public class Quarto {
         Quarto retorno = null;
         try{
             for(Quarto q: listar()){
-                if(q.idQuartao == (id)){
+                if(q.idQuarto == (id)){
                     retorno = q;
                     break;
                 }
