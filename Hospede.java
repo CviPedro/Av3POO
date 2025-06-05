@@ -20,24 +20,27 @@ public class Hospede extends Pessoa {
     public void setRg(String rg){
         this.rg = rg;
     }
-
+    @Override
     public String getCpf(){
         return this.cpf;
     }
+    @Override
     public void setCpf(String cpf){
         this.cpf = cpf;
     }
-
+    @Override
     public String getNome(){
         return this.nome;
     }
+    @Override
     public void setNome(String nome){
         this.nome = nome;
     }
-
+    @Override
     public int getIdade(){
         return this.idade;
     }
+    @Override
     public void setIdade(int idade){
         this.idade = idade;
     }
@@ -46,7 +49,7 @@ public class Hospede extends Pessoa {
     public Boolean inserir(){
         
         try{
-            FileWriter fw = new FileWriter("Hospede.txt", true);
+            FileWriter fw = new FileWriter("texts/Hospede.txt", true);
             
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(super.cpf+ ";"+nome + ";"+idade + ";"+rg);
@@ -59,20 +62,10 @@ public class Hospede extends Pessoa {
         return true;
     }
 
-    public Boolean editar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-         return false;
-        }
-        return true;    
-    }
-
     public ArrayList<Hospede> listar(){
         ArrayList<Hospede> hospedes = new ArrayList<>();
         try{
-            FileReader fr = new FileReader("Hospede.txt");
+            FileReader fr = new FileReader("texts/Hospede.txt");
             
             BufferedReader br = new BufferedReader(fr);
             String linha;
@@ -81,7 +74,6 @@ public class Hospede extends Pessoa {
                 dados = linha.split(";");
                 Hospede h = new Hospede(dados[0], dados[1], dados[2], Integer.parseInt(dados[3]));
                 hospedes.add(h);
-                //System.out.println(linha);
             }
             br.close();
            
