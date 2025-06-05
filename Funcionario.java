@@ -21,24 +21,27 @@ public class Funcionario extends Pessoa {
     public void setFuncao(String funcao){
         this.funcao = funcao;
     }
-
+    @Override
     public String getCpf(){
         return this.cpf;
     }
+    @Override
     public void setCpf(String cpf){
         this.cpf = cpf;
     }
-
+    @Override
     public String getNome(){
         return this.nome;
     }
+    @Override
     public void setNome(String nome){
         this.nome = nome;
     }
-
+    @Override
     public int getIdade(){
         return this.idade;
     }
+    @Override
     public void setIdade(int idade){
         this.idade = idade;
     }
@@ -47,12 +50,12 @@ public class Funcionario extends Pessoa {
     public Boolean inserir(){
         
         try{
-            FileWriter fw = new FileWriter("Funcionario.txt", true);
+            FileWriter fw = new FileWriter("texts/funcionario.txt", true);
             
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(super.cpf+ ";"+nome + ";"+idade + ";"+funcao);
+            bw.write(super.cpf+ ";"+super.nome + ";"+super.idade + ";"+funcao);
+            bw.newLine();
             bw.close();
-            fw.close();
         }catch(IOException e){
             System.out.println(e.getMessage());
             return false;
@@ -60,28 +63,19 @@ public class Funcionario extends Pessoa {
         return true;
     }
 
-    public Boolean editar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-            return false;
-        }
-        return true;
-    }
     public ArrayList<Funcionario> listar(){
         ArrayList<Funcionario> funcionarios = new ArrayList<>();
         try{
-            FileReader fr = new FileReader("Funcionario.txt");
+            FileReader fr = new FileReader("texts/funcionario.txt");
             
             BufferedReader br = new BufferedReader(fr);
             String linha;
             String[] dados;
             while((linha = br.readLine()) != null){
                 dados = linha.split(";");
-                Funcionario f = new Funcionario(dados[0], dados[1], dados[2], Integer.parseInt(dados[3]));
+                Funcionario f = new Funcionario(dados[3], dados[0], dados[1], Integer.parseInt(dados[2]));
                 funcionarios.add(f);
-                //System.out.println(linha);
+                
             }
             br.close();
            
@@ -105,7 +99,8 @@ public class Funcionario extends Pessoa {
                 return retorno;
             }
             
-    }    
+    }
+    @Override    
     public void mostrar(){
         System.out.println(toString());
 
