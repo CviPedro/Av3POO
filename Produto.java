@@ -53,28 +53,17 @@ public class Produto {
         return true;
     }
 
-
-    public Boolean editar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-            return false;
-        }
-        return true;
-    }
-
     public ArrayList<Produto> listar(){
         ArrayList<Produto> produtos = new ArrayList<>();
         try{
-            FileReader fr = new FileReader("Produto.txt");
+            FileReader fr = new FileReader("texts/Produto.txt");
             
             BufferedReader br = new BufferedReader(fr);
             String linha;
             String[] dados;
             while((linha = br.readLine()) != null){
                 dados = linha.split(";");
-                Produto p = new Produto(dados[0], Integer.parseInt(dados[1]), Double.parseDouble(dados[2]));
+                Produto p = new Produto(dados[0], Integer.parseInt(dados[1]), Double.valueOf(dados[2]));
                 produtos.add(p);
             }
             br.close();
