@@ -84,7 +84,7 @@ public class Reserva {
     public Boolean inserir(){
         
         try{
-            FileWriter fw = new FileWriter("Reserva.txt", true);
+            FileWriter fw = new FileWriter("texts/Reserva.txt", true);
             
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(idReserva + ";"+valor + ";"+dataEntrada + ";"+dataSaida + ";"+checkin
@@ -99,29 +99,20 @@ public class Reserva {
     }
 
 
-    public Boolean editar(){
-        try {
-            
-        } catch (IOException e) {
-            System.out.println("Falha ao encontrar arquivo "+ e.getMessage());
-            return false;
-        }
-        return true;
-    }
+   
 
     public ArrayList<Reserva> listar(){
         ArrayList<Reserva> reservas = new ArrayList<>();
         try{
-            FileReader fr = new FileReader("Reserva.txt");
+            FileReader fr = new FileReader("texts/Reserva.txt");
             
             BufferedReader br = new BufferedReader(fr);
             String linha;
             String[] dados;
             while((linha = br.readLine()) != null){
                 dados = linha.split(";");
-            Reserva r = new Reserva(Integer.parseInt(dados[0]), Double.parseDouble(dados[1]), dados[2], dados[3], 
-            Boolean.parseBoolean(dados[4]), Boolean.parseBoolean(dados[5]), quarto.getIdQuarto(), hospede.getCpf());
-               reservas.add(r);
+            
+            
             }
             br.close();
         }catch(IOException e){
